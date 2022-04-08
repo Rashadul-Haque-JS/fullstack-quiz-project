@@ -41,6 +41,14 @@ module.exports = database => {
 
             },
 
+            answer: {
+                type: DataTypes.STRING,
+                allowNull: false,
+               
+
+
+            },
+
 
 
         },

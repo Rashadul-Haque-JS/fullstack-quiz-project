@@ -7,6 +7,7 @@ async function createQuestions() {
             questions: 'what is A?',
             author_name:'he',
             image: 'hello',
+            answer: 'alfb.',
           
 
         })
