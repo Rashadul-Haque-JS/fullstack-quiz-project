@@ -7,20 +7,20 @@ const register = async (req, res) => {
 
     const { name, email, password } = req.body
     try {
-        const user = await Users.create({
+        await Users.create({
             name,
             email,
             password_hash: password
             
         })
         const token = await Users.authenticate(email, password)
-       const guest = await Users.findOne({ where: { email },attributes:{exclude:['password_hash']} })
-        res.json({ token, guest })
+       const user = await Users.findOne({ where: { email },attributes:{exclude:['password_hash']} })
+        res.json({ token, user })
        
 
     } catch (error) {
-        const err = error.errors
-        res.json(err)
+        const errorMessage = error.errors[0].message
+        res.status(404).json(errorMessage)
     }
 
 
@@ -39,8 +39,8 @@ const login = async (req, res) => {
 
 
     } catch (error) {
-        error.message = 'Wrong password!'
-        res.status(404).send(error.message)
+        console.log(error)
+        res.status(404).send(error)
 
     }
 
