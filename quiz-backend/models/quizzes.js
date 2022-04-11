@@ -25,20 +25,11 @@ module.exports = database => {
                 type: DataTypes.STRING,
 
             },
-            author_as_admin: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: true
-
-
-            },
-
-            author_as_user: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false
-
-
+            author_role: {
+                type: DataTypes.STRING,
+                enum: ['guest','member','admin'],
+                defaultValue: 'admin',
+                allowNull:false,
             },
             answer: {
                 type: DataTypes.STRING,
