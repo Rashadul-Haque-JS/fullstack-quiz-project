@@ -30,7 +30,6 @@ module.exports = database => {
   }
 
 
-
   Users.init(
     {
       name: {
@@ -55,8 +54,6 @@ module.exports = database => {
 
       role: {
         type: DataTypes.STRING,
-        enum: ['member', 'admin'],
-        defaultValue: 'member',
         allowNull: false
       },
 

@@ -16,8 +16,8 @@ const sequelize = new Sequelize({
 const Quizzes = setupQuizzes(sequelize)
 const Users = setupUsers(sequelize)
 
-Users.hasMany(Quizzes)
-Quizzes.belongsTo(Users)
+Users.hasMany(Quizzes,{ foreignKey: 'authorId', sourceKey:'id' })
+Quizzes.belongsTo(Users,{ foreignKey: 'authorId', targetKey:'id' })
 
 
 

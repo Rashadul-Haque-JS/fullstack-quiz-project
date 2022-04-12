@@ -1,19 +1,22 @@
 
-const { Quizzes} = require('../models/index')
+const { Quizzes, Users} = require('../models/index')
 
 async function createQuestions() {
-        await Quizzes.create({
-            questions: "What is Sweden's capital city?",
-            author_name: 'Jhon Mills',
-            author_email: 'jhon.mills@example.com',
-            image: 'Blob',
-            answer: "Stockholm",
+        
+    
+        await Users.create({
+            name: 'Jhon Mills',
+            email: 'jhon.mills@example.com',
+            password_hash: '$2a$12$hzEFwWG/qG2On9CTPBE.z.Q6cnLr46uZJ8LhSEvBLccc901zdDGXK',
+            role:'admin'
            
 
         })
     
+        await Quizzes.bulkCreate(require('./quiz.json'))
        
         console.log('created .....questions')
 
 }
+
 createQuestions()

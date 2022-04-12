@@ -1,26 +1,33 @@
 const { Users } = require('../models/index')
 
-
 // User registration
 
 const register = async (req, res) => {
 
     const { name, email, password } = req.body
     try {
-        await Users.create({
-            name,
-            email,
-            password_hash: password
+        if (email !== 'jhon.mills@example.com') {
+            await Users.create({
+                name,
+                email,
+                password_hash: password,
+                role: 'member'
             
-        })
-        const token = await Users.authenticate(email, password)
-       const user = await Users.findOne({ where: { email },attributes:{exclude:['password_hash']} })
-        res.json({ token, user })
+            })
+
+            const token = await Users.authenticate(email, password)
+            const user = await Users.findOne({ where: { email },attributes:{exclude:['password_hash']} })
+             res.json({ token, user })
+        } else {
+            // throw new Error ('Forbidden!')
+            res.status(403).json('Reserved email address!')
+        }
+       
        
 
     } catch (error) {
-        const errorMessage = error.errors[0].message
-        res.status(404).json(errorMessage)
+    //   console.log(error)
+        res.status(400).json(error)
     }
 
 
@@ -42,8 +49,9 @@ const login = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error)
-        res.status(404).send(error)
+      
+        console.log({ error})
+        res.status(404).json({ error:'User not found!' })
 
     }
 

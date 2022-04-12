@@ -5,17 +5,11 @@ module.exports = database => {
 
     Quizzes.init(
         {
-            questions: {
+            question: {
                 type: DataTypes.STRING,
 
             },
-            image: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                defaultValue: true
-
-
-            },
+           
             author_name: {
                 type: DataTypes.STRING,
 
@@ -27,9 +21,15 @@ module.exports = database => {
             },
             author_role: {
                 type: DataTypes.STRING,
-                enum: ['guest','member','admin'],
-                defaultValue: 'admin',
                 allowNull:false,
+            },
+
+            image: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                defaultValue: true
+
+
             },
             answer: {
                 type: DataTypes.STRING,
@@ -37,18 +37,11 @@ module.exports = database => {
             }
             
             
-               
-
-
-            
-
-
-
         },
 
         {
             sequelize: database,
-            modelName: 'Quizzes',
+            modelName: 'quizzes',
             logging: false,
             timestamps: false
         }
