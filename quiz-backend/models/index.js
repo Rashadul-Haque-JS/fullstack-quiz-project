@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize')
 const setupQuizzes = require('./quizzes')
 const setupUsers = require('./auth/users')
+const setupQuestions = require('./questions')
 
 
 
@@ -15,10 +16,20 @@ const sequelize = new Sequelize({
 
 const Quizzes = setupQuizzes(sequelize)
 const Users = setupUsers(sequelize)
+const Questions = setupQuestions(sequelize)
 
-Users.hasMany(Quizzes,{ foreignKey: 'authorId', sourceKey:'id' })
-Quizzes.belongsTo(Users,{ foreignKey: 'authorId', targetKey:'id' })
+Users.hasMany(Quizzes)
+Quizzes.belongsTo(Users)
+
+Quizzes.hasMany(Questions)
+Questions.belongsTo(Quizzes)
+
+Users.hasMany(Questions)
+Users.belongsToMany(Questions,{through:'Quizzes'})
 
 
 
-module.exports = {  Quizzes, Users }
+
+
+
+module.exports = {  Quizzes, Users, Questions }
