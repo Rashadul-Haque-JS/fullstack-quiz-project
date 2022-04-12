@@ -25,48 +25,33 @@ module.exports = database => {
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
       return token
     }
-
-
   }
 
-
-  Users.init(
+   Users.init(
     {
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
-
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
       },
-
-
       password_hash: {
         type: DataTypes.STRING,
         allowNull: false,
         max: 64,
-        min: 2
-
+       min: 2
       },
-
       role: {
         type: DataTypes.STRING,
         allowNull: false
       },
-
-
       score: {
         type: DataTypes.INTEGER,
         defaultValue: 0
-
-      },
-
-
-
-
+      }
     },
 
     {

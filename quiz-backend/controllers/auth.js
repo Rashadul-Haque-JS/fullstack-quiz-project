@@ -5,8 +5,9 @@ const { Users } = require('../models/index')
 const register = async (req, res) => {
 
     const { name, email, password } = req.body
+    const userExist = await Users.findOne({where:{email}})
     try {
-        if (email !== 'jhon.mills@example.com') {
+        if (email !== 'jhon.mills@example.com' && !userExist) {
             await Users.create({
                 name,
                 email,
@@ -20,7 +21,7 @@ const register = async (req, res) => {
              res.json({ token, user })
         } else {
             // throw new Error ('Forbidden!')
-            res.status(403).json('Reserved email address!')
+            res.status(403).json('You entered reserved or existing email!')
         }
        
        

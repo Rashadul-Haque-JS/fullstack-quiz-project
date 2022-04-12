@@ -1,0 +1,56 @@
+[
+    {
+        "question": "I have 4 legs and a tail. I have whiskers. People like to keep me as a pet. What am I?",
+        "answer": "cat",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I am a big cat. I have big sharp teeth. I have orange fur and black stripes. What am I?",
+        "answer": "tiger",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I have thick grey skin. I have big ears and a long trunk. I can spray water with my trunk. What am I?",
+        "answer": "eliphant",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I have brown and orange spots. I have 4 long legs. I am very tall. What am I?",
+        "answer": "giraffe",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I live in the ocean. I can live for a long time. I am a very large mammal. What am I?",
+        "answer": "whale",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I have a large tail and big feet. I can hop along very fast. I live in Australia. What am I?",
+        "answer": "kangaroo",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I am only mammals that can't jump, what i am?",
+        "answer": "eliphant",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I am not octopus, that live in water and have 10 legs, what i am?",
+        "answer": "shrimp",
+        "quizId": "1",
+        "userId": "1"
+    },
+    {
+        "question": "I live in water and have 9 brains, what i am?",
+        "answer": "octopus",
+        "quizId": "1",
+        "userId": "1"
+    }
+]
