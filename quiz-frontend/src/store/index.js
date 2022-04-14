@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: '',
-    user:{},
+    user: {},
+    genres:['animal', 'history', 'sports','tech','country','movie']
   },
   
   mutations: {
@@ -33,10 +34,21 @@ export default new Vuex.Store({
         await API.saveToken(response.data.token)
         context.commit('getToken', response.data.token)
         context.commit('saveUser', response.data.user)
-        this.$router.push("/");
+      
       } catch (error) {
         console.log(error)
       }
+    },
+
+    async signup(context, newUser) {
+      try {
+        const response = await API.registerUser(newUser)
+        console.log(response)
+        context.commit(('getToken', response.data.token))
+       } catch (error) {
+        console.log(error)
+      }
+      
     },
 
     logout(context) {

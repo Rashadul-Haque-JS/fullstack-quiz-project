@@ -7,7 +7,7 @@
       <router-link to="/register">Register</router-link>
       </div>
       <div v-else>
-      <h1>Welcome <span>{{user.name}}</span></h1>
+      <h1>Most welcome <span>{{user.name}} !</span></h1>
       <button @click="logout">logout</button>
       </div>
       
@@ -16,12 +16,15 @@
 </template>
 
 <script>
-import {mapActions } from 'vuex'
+
     export default {
       props:{token: String, user:Object},
       
         methods:{
-            ...mapActions(['logout'])
+           async logout(){
+             this.$store.dispatch('logout')
+             await this.$router.push('/login')
+           }
         }
     }
 </script>
@@ -30,7 +33,7 @@ import {mapActions } from 'vuex'
 
 nav {
   padding: 20px;
-  background:#22BABB;
+  background:#000;
   display:flex;
   justify-content: space-between;
   align-items:center;
@@ -42,7 +45,7 @@ justify-content: space-between;
 align-items:center;
 h1{
   font-size:1.2rem;
-  color:#730202;
+  color:#DFFF9B;
   text-transform:Capitalize;
 }
 button{
@@ -56,11 +59,11 @@ button{
 
   a {
     font-weight: bold;
-    color: #9EF8EE;
+    color: #DFFF9B;
     margin:0px 12px;
 
     &.router-link-exact-active {
-      color: #348888;
+      color: #9EF8EE;
     }
   }
 }

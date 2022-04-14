@@ -16,8 +16,8 @@ export async function login(email, password) {
   })
 }
 
-export async function registerAccount(payload) {
-  axios.post('/register', payload)
+export async function registerUser(newUser) {
+  axios.post('/register', newUser)
 }
 
 export async function createQuiz(genres, email, image) {

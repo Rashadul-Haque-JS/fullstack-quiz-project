@@ -1,7 +1,7 @@
-<template>
+<template >
     <div class="wrapper">
     <div class="login-container">
-    <form @submit.prevent="saveAuth({email, password})">
+    <form @submit.prevent="saveAuth">
         <label>Login</label>
         <input type="text" 
         name="email"
@@ -11,7 +11,7 @@
         <input type="password" 
         name="password" placeholder ="password"
         v-model="password">
-        <button type="submit" @click="redirect">Login</button>
+        <button type="submit">Login</button>
     </form>
     <router-link to="/register">Sign-up</router-link>
     </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
     export default {
         data() {
     return {
@@ -35,10 +35,13 @@ import { mapActions, mapState } from "vuex";
   },
 
   methods:{
-      ...mapActions(['saveAuth']),
-      redirect(){
-          this.token ? this.$router.push('/') : ''
-      }
+      
+      async saveAuth(){
+          await this.$store.dispatch('saveAuth', {email:this.email, password:this.password})
+            if(this.token){
+            await this.$router.push('/')
+            }
+          }
   }
     }
 </script>
@@ -53,6 +56,7 @@ import { mapActions, mapState } from "vuex";
         display:flex;
         justify-content: center;
         align-items:center;
+        padding:100px 0px;
 
         .login-container{
             width:400px;
@@ -64,7 +68,7 @@ import { mapActions, mapState } from "vuex";
             align-items:center;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             border-radius:10px;
-            border:1px solid #22BABB;
+            outline:1px solid #516CA3;
             margin-top:48px;
 
             form{
@@ -73,6 +77,10 @@ import { mapActions, mapState } from "vuex";
             display:flex;
             flex-direction:column;
             justify-content:space-between;
+
+            label{
+                font-weight:bold;
+            }
 
             input,button{
                 padding:4px 20px;
@@ -90,6 +98,7 @@ import { mapActions, mapState } from "vuex";
                 padding:40px;
                 margin:40px;
                 text-decoration:none;
+                font-weight:bold;
             }
         }
     }
