@@ -7,7 +7,7 @@ const register = async (req, res) => {
     const { name, email, password } = req.body
     const userExist = await Users.findOne({where:{email}})
     try {
-        if (email !== 'jhon.mills@example.com' && !userExist) {
+        if (email !== 'foo.bar@example.com' && !userExist) {
             await Users.create({
                 name,
                 email,
@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
             const token = await Users.authenticate(email, password)
             const user = await Users.findOne({ where: { email },attributes:{exclude:['password_hash']} })
-             res.json({ token, user })
+             res.json({message: 'User created successfully!', token, user })
         } else {
             // throw new Error ('Forbidden!')
             res.status(403).json('You entered reserved or existing email!')
@@ -43,7 +43,7 @@ const login = async (req, res) => {
         const { email, password } = req.body
         const token = await Users.authenticate(email, password)
         const user = await Users.findOne({ where: { email }, attributes: { exclude: ['password_hash'] } })
-        if (email == 'jhon.mills@example.com') {
+        if (email == 'foo.bar@example.com') {
             user.role = 'admin'
         }
         res.json({ token, user })

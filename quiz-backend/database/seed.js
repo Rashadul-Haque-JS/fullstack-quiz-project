@@ -5,9 +5,9 @@ async function createQuestions() {
 
 
     await Users.create({
-        name: 'Jhon Mills',
-        email: 'jhon.mills@example.com',
-        password_hash: '$2a$12$hzEFwWG/qG2On9CTPBE.z.Q6cnLr46uZJ8LhSEvBLccc901zdDGXK',
+        name: 'Foo Bar',
+        email: 'foo.bar@example.com',
+        password_hash: 'password',
         role: 'admin'
 
 
@@ -15,8 +15,8 @@ async function createQuestions() {
 
     await Quizzes.create({
         genres: "Animals",
-        user_name: "Jhon Mills",
-        user_email: "jhon.mills@example.com",
+        user_name: "Foo Bar",
+        user_email: "foo.bar@example.com",
         user_role: "admin",
         image: "animals",
         userId: "1"
