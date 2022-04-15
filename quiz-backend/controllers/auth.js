@@ -37,7 +37,7 @@ const register = async (req, res) => {
 
 // User login
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
 
     try {
         const { email, password } = req.body
@@ -47,8 +47,7 @@ const login = async (req, res) => {
             user.role = 'admin'
         }
         res.json({ token, user })
-
-
+        next()
     } catch (error) {
       
         console.log({ error})

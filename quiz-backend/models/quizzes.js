@@ -6,7 +6,7 @@ module.exports = database => {
 
   Quizzes.init(
     {
-      genres: {
+      genre: {
         type: DataTypes.STRING
 
       },

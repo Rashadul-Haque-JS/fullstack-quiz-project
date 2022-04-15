@@ -1,0 +1,55 @@
+ [
+    {   "id":"1",
+        "genre": "animals",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "animal",
+        "userId": "1"
+    },
+
+    {    
+        "id":"2",
+        "genre": "history",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "history",
+        "userId": "1"
+    },
+    {   
+        "id":"3",
+        "genre": "sports",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "sports",
+        "userId": "1"
+    },
+    {   
+        "id":"4",
+        "genre": "tech",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "tech",
+        "userId": "1"
+    },
+    {    "id":"5",
+        "genre": "country",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "country",
+        "userId": "1"
+    },
+    {   
+        "id":"6",
+        "genre": "movie",
+        "user_name": "Foo Bar",
+        "user_email": "foo.bar@example.com",
+        "user_role": "admin",
+        "image": "movie",
+        "userId": "1"
+    }
+]

@@ -1,31 +1,41 @@
 const { Quizzes, Users} = require('../models/index')
 
-const createQuiz = async (req, res) => {
+const createQuiz = async (req, res, next) => {
     try {
-    const { genres, email, image } = req.body
+    const { genre, image, email } = req.body
     const user = await Users.findOne({ where: { email } })
-    const genExistList = await Quizzes.findAll({ where: { genres }, raw: true })
+    const genExistList = await Quizzes.findAll({ where: { genre }, raw: true })
     const genExistBool = genExistList.some(ob => ob.user_email == email)
 
  
         if (!genExistBool) {
             await Quizzes.create({
-                genres,
+                genre,
                 user_name: user.name,
                 user_email: user.email,
                 user_role: user.role,
                 image,
                 userId: user.id
             })
-            res.status(200).json('Quiz created!')
-
+            res.json({ message: 'Quiz created!' })
+            next()
         } else {
-            res.status(400).json('You have created this genres, create questions instead!')
-
+            res.json({ message: 'You have created this genre, create questions instead!' })
+            next()
         }
     } catch (error) {
-        console.log(error)
+        res.status(501).json({ error:'something wrong!' })
+        next()
     }
 }
 
-module.exports = { createQuiz }
+const getAllGenres = async (req, res, next)=>{
+    try{
+        const genres = await Quizzes.findAll()
+        res.json(genres)
+    } catch (error) {
+        res.status(501).json(error)
+    }
+}
+
+module.exports = { createQuiz, getAllGenres }

@@ -13,14 +13,7 @@ async function createQuestions() {
 
     })
 
-    await Quizzes.create({
-        genres: "Animals",
-        user_name: "Foo Bar",
-        user_email: "foo.bar@example.com",
-        user_role: "admin",
-        image: "animals",
-        userId: "1"
-    })
+    await Quizzes.bulkCreate(require('./quizzes.json'))
 
     await Questions.bulkCreate(require('./quesions.json'))
 
