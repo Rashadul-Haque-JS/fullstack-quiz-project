@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.baseURL = 'http://localhost:5000/api'
 
 
 //USER START
@@ -17,12 +17,22 @@ export async function login(email, password) {
 }
 
 export async function registerUser(newUser) {
-  axios.post('/register', newUser)
+ return await axios.post('/register', newUser)
 }
 
-export async function createQuiz(genres, email, image) {
-    axios.post('/createQuiz', {
-        genres, email, image
+export async function createQuiz(genre, image, email) {
+  return await  axios.post('/createQuiz', {
+        genre, image, email 
     })
+}
+
+export async function addQuestion(genre, question, answer) {
+  return await axios.post('/createQuestion', {
+    genre, question, answer
+  })
+}
+
+export async function getAllGenres() {
+  return await axios.get('/allQuizGenres')
 }
 
