@@ -1,20 +1,13 @@
 <template>
     <div class="wrapper">
-        <!-- <section v-if="done">
-            <p>Your scores: {{ scores }}</p>
-        </section> -->
         <div class="quiz-container">
-            <div class="answer-quiz" v-if="answerQuiz">
-                <article>
-
-                </article>
-            </div>
-            <div class="create-quiz-ques" v-else>
+            <div class="create-quiz-ques">
                 <div class="create-quizzes">
                     <h1>Create your Quiz</h1>
                     <p>*The same genre? - Nope!</p>
+                    <hr>
                     <form @submit.prevent="createQuiz">
-                        <input type="text" name="genre" placeholder="Genre" v-model="quiz.genre">
+                        <input type="text" name="genre" placeholder="Genre" @change="inputStageOnChange" v-model="quiz.genre">
                         <input type="file" name="image">
                         <button>Create Quiz</button>
                     </form>
@@ -23,25 +16,30 @@
                 <div class="create-questions">
                     <h1>Create questions for your quiz </h1>
                     <p>* How many? - Unlimited!</p>
-                    <form @submit.prevent="createQues">
-                        <input type="text" name="genre" placeholder="name of your genre" v-model="ques.genre">
+                    <hr>
+                    <form @submit.prevent="createQuestion">
+                        <select name="genre" id="genre" required v-model="ques.genre">
+                            <option value="">Select genre from your list</option>
+                            <option v-for="genre in userGenres" :key="genre" :value="genre">
+                                {{ genre }}
+                            </option>
+                        </select>
                         <input type="text" name="question" placeholder="your question" v-model="ques.question">
                         <input type="text" name="answer" placeholder="correct answer of question" v-model="ques.answer">
                         <button>Create Question</button>
                     </form>
                 </div>
             </div>
-
-
-
+            <router-link to='/question' @click.native="getMessages(blankMgs)">Answer Quiz</router-link>
         </div>
 
     </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
+
     data() {
         return {
             quiz: {
@@ -53,14 +51,13 @@ export default {
                 question: '',
                 answer: ''
             },
-            answerQuiz: false,
-
-
+            blankMgs: ''
         };
     },
 
     computed: {
         ...mapState(['user', 'okMgs', 'errorMgs']),
+        ...mapGetters(['userGenres']),
 
 
     },
@@ -70,10 +67,16 @@ export default {
         async createQuiz() {
             let imgs = 'comming';
             await this.$store.dispatch('makeQuiz', { genre: this.quiz.genre, image: imgs, email: this.user.email })
-        }
+        },
+
+        async createQuestion() {
+            await this.$store.dispatch('createQues', { email: this.user.email, genre: this.ques.genre, question: this.ques.question, answer: this.ques.answer })
+        },
+
+        inputStageOnChange() {
+            this.quiz.genre = this.quiz.genre.toLowerCase()
+        },
     },
-
-
 }
 </script>
 
@@ -82,6 +85,7 @@ export default {
     height: 100vh;
 
     .quiz-container {
+        padding:0px 16px;
         .create-quiz-ques {
             display: flex;
             justify-content: space-around;
@@ -107,6 +111,10 @@ export default {
                     padding-bottom: 24px;
                 }
 
+                hr {
+                    border-top: 1px solid black;
+                    width: 400px;
+                }
 
                 form {
                     width: 400px;
@@ -120,18 +128,25 @@ export default {
                         font-weight: bold;
                     }
 
+                    select,
                     input,
                     button {
-                        padding: 4px 20px;
-                        border-radius: 5px;
+                        padding: 6px 20px;
+                        border-radius: 2px;
                         border: none;
                         text-align: center;
                     }
 
                     button {
-                        background: #000;
+                        background: #FB0204;
                         color: #fff;
                         text-align: center;
+                    }
+
+                    input,
+                    select {
+                        background-color: #000;
+                        color: #fff;
                     }
 
                 }

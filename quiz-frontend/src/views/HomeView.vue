@@ -13,7 +13,7 @@
       <h1>ANSWER FOR OTHER'S QUESTIONS</h1>
       </div>
       <section class="sub-headings">
-      <h2>Quizzes genresI↴</h2>
+      <h2>Quizzes genres ↴</h2>
       <p>(User can create quiz of more genres)</p>
       </section>
       <div class="genre-image" v-if="!token">
@@ -23,7 +23,7 @@
       </div>
 
       <div class="genre-image" v-else>
-      <router-link to='/quiz' v-for="(genre,index) in genres" :key="index">
+      <router-link to='/question' v-for="(genre,index) in genres" :key="index">
         <Card :genre="genre"/>
       </router-link>
       </div>

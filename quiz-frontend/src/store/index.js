@@ -10,10 +10,12 @@ export default new Vuex.Store({
     token: '',
     user: {},
     genresList: [],
-    genres:{},
-    genresInit: ['animal', 'history', 'sports', 'tech', 'country', 'movie'],
+    genres: {},
+    questionsList:[],
+    questions:{},
+    myQuesList:[],
     message: "",
-    errorMessage:''
+    errorMessage: '',
   },
   
   mutations: {
@@ -39,6 +41,29 @@ export default new Vuex.Store({
         }
         Vue.set(state.genres, genre.id, genre)
       }
+    },
+
+    saveNewGenre(state, payload) {
+      state.genresList.push(payload)
+    },
+
+    saveQuestions(state, questions) {
+      for (let question of questions) {
+        if (!state.questionsList.find((obj) => obj.id === question.id)) {
+          state.questionsList.push({
+            ...question
+          })
+        }
+        Vue.set(state.questions, question.id, question)
+      }
+    },
+
+    saveUserQues(state, payload) {
+      state.myQuesList = payload
+    },
+
+    addToUserQues(state, question) {
+      state.myQuesList.push(question)
     },
 
     saveMessage(state, mgs){
@@ -92,6 +117,7 @@ export default new Vuex.Store({
     async makeQuiz(context, { genre, image, email }) {
       try {
         const response = await API.createQuiz(genre, image, email)
+        context.commit('saveNewGenre', response.data.newGenre)
         context.commit('saveMessage', response.data.message)
       } catch (error) {
         context.commit('saveErrorMgs', error)
@@ -112,10 +138,76 @@ export default new Vuex.Store({
 
     },
 
+    async fetchQuestions(context) {
+      try {
+        if (this.state.questionsList.length < 1) {
+          const response = await API.getAllQuestions()
+          context.commit('saveQuestions', response.data)
+          console.log(response.data)
+        }
+      } catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+
+    },
+
+    async createQues(context, {email, genre, question, answer}){
+      try {
+        const response = await API.addQuestion(email, genre, question, answer)
+        context.commit('saveUserQues',response.data)
+        console.log(response)
+       } catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+    },
+
+    async answerQuiz(context, { id, email, ans }) {
+      try { 
+        const response = await API.answerQuestions(id, email, ans)
+        context.commit('saveUser', response.data.user)
+       context.commit('saveMessage', response.data.message)
+      }
+      catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+    },
+
+
+    async fetchOneQues(context, id) {
+      try { 
+        const response = await API.takeInOne(id)
+        if (response.data.question) {
+          context.commit('addToUserQues', response.data.question)
+        } else {
+          context.commit('saveMessage', response.data.message)
+        }
+      
+       console.log(response)
+      }
+      catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+    },
+
+
+
+
+    getMessages(context,mgs) {
+      context.commit('saveMessage',mgs)
+    }
+
   
   },
 
   getters: {
+    userGenres(state) {
+      const userGenres = []
+      const genres = state.genresList.filter(gen => gen.userId == state.user.id)
+      genres.forEach(gen => {
+        userGenres.push(gen.genre)
+      })
+      return userGenres
+    }
   },
 
   modules: {

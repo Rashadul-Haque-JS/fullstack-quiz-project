@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <PagesNav :user="user" :token="token" />
-    <ErrPage v-if = "message || errorMessage" />
+    <ErrPage v-if="message || errorMessage" />
     <router-view />
     <PagesFooter />
   </div>
@@ -20,13 +20,11 @@ export default {
 
   computed: {
     ...mapState(['user', 'token', 'message', 'errorMessage']),
-
-   
-
   },
 
   mounted() {
     this.$store.dispatch('fetchGenres')
+    this.$store.dispatch('fetchQuestions')
   }
 
 }
@@ -49,7 +47,6 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 
 }

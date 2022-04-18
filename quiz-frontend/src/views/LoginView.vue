@@ -1,6 +1,7 @@
 <template >
     <div class="wrapper">
-    <div class="login-container">
+    <p v-if="token">You are already in!</p>
+    <div class="login-container" v-else>
     <form @submit.prevent="saveAuth">
         <label>Login</label>
         <input type="text" 

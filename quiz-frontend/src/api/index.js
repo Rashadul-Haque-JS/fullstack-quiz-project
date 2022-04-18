@@ -26,13 +26,34 @@ export async function createQuiz(genre, image, email) {
     })
 }
 
-export async function addQuestion(genre, question, answer) {
+export async function addQuestion(email,genre, question, answer) {
   return await axios.post('/createQuestion', {
-    genre, question, answer
+    email, genre, question, answer
   })
 }
 
+export async function answerQuestions(id, email, ans) {
+  return await axios.post('/answer', {
+    id, email, ans
+  })
+}
+
+// Get
 export async function getAllGenres() {
   return await axios.get('/allQuizGenres')
 }
+
+export async function getAllQuestions() {
+  return await axios.get('/allQuestions')
+}
+
+export async function takeInOne(id) {
+  return await axios.get(`/getFromUsers/${id}`)
+}
+
+
+
+
+
+
 
