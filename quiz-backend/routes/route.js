@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { register, login } = require('../controllers/auth')
-const { createQuiz, getAllGenres } = require('../controllers/quiz')
+const { createQuiz, getAllGenres, quiz } = require('../controllers/quiz')
 const { createQuestion, allQuestions,getFromUsers } = require('../controllers/question')
 const { answer }  = require('../controllers/answer')
 router.post('/register', register)
@@ -19,5 +19,11 @@ router.post('/answer', answer)
 router.get('/allQuizGenres', getAllGenres)
 router.get('/allQuestions',allQuestions )
 router.get('/getFromUsers/:id', getFromUsers)
+
+
+// Post
+
+router.delete('/quiz/:id', quiz)
+
 
 module.exports = router

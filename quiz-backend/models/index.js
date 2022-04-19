@@ -14,12 +14,12 @@ const Users = setupUsers(sequelize)
 const Questions = setupQuestions(sequelize)
 
 Users.hasMany(Quizzes)
-Quizzes.belongsTo(Users)
+Quizzes.belongsTo(Users,{onDelete: 'cascade',hooks:true})
 
 Quizzes.hasMany(Questions)
-Questions.belongsTo(Quizzes)
+Questions.belongsTo(Quizzes,{onDelete: 'cascade',hooks:true})
 
 Users.hasMany(Questions)
-Users.belongsToMany(Questions, {through: 'Quizzes'})
+Users.belongsToMany(Questions, {through: 'Quizzes',onDelete: 'cascade',hooks:true})
 
 module.exports = {  Quizzes, Users, Questions}

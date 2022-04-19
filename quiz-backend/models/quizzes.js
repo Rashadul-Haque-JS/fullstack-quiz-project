@@ -38,7 +38,7 @@ module.exports = database => {
       sequelize: database,
       modelName: 'quizzes',
       logging: false,
-      timestamps: true
+      timestamps: false
     }
   )
 

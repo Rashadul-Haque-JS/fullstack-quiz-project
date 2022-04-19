@@ -41,7 +41,21 @@ const getAllGenres = async (req, res, next)=>{
 }
 
 
+const quiz = async(req, res, next) => {
+
+    try {
+        const id = req.params.id
+        await Quizzes.destroy({ where: { id } })
+        const genres = await Quizzes.findAll()
+        res.json({genres:genres, message: 'Quiz deleted' })
+
+    } catch (error) {
+        res.status(501).json(error)
+    }
+}
 
 
 
-module.exports = { createQuiz, getAllGenres }
+
+
+module.exports = { createQuiz, getAllGenres, quiz }
