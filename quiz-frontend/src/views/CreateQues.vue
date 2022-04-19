@@ -7,7 +7,8 @@
                     <p>*The same genre? - Nope!</p>
                     <hr>
                     <form @submit.prevent="createQuiz">
-                        <input type="text" name="genre" placeholder="Genre" @change="inputStageOnChange" v-model="quiz.genre">
+                        <input type="text" name="genre" placeholder="Genre" @change="inputStageOnChange"
+                            v-model="quiz.genre">
                         <input type="file" name="image">
                         <button>Create Quiz</button>
                     </form>
@@ -20,8 +21,8 @@
                     <form @submit.prevent="createQuestion">
                         <select name="genre" id="genre" required v-model="ques.genre">
                             <option value="">Select genre from your list</option>
-                            <option v-for="genre in userGenres" :key="genre" :value="genre">
-                                {{ genre }}
+                            <option v-for="gen in userGenres" :key="gen.id" :value="gen.genre">
+                                {{ gen.genre }}
                             </option>
                         </select>
                         <input type="text" name="question" placeholder="your question" v-model="ques.question">
@@ -85,7 +86,8 @@ export default {
     height: 100vh;
 
     .quiz-container {
-        padding:0px 16px;
+        padding: 0px 16px;
+
         .create-quiz-ques {
             display: flex;
             justify-content: space-around;

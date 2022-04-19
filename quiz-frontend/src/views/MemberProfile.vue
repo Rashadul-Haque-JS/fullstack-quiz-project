@@ -26,11 +26,13 @@
                 <router-link class="page-navigator" to='/create'>Create More</router-link>
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
-                    <ol>
-                        <li v-for="(genre, idx) in userGenres" :key="idx">
-                            {{ genre }}
-                        </li>
-                    </ol>
+                    <article v-for="(gen, idx) in userGenres" :key="idx">
+                        <p>{{ gen.id }}.{{ gen.genre }}</p>
+                        <form @submit.prevent="deleteQuizz(gen.id)">
+                            <button> delete </button>
+                        </form>
+
+                    </article>
                 </section>
                 <hr>
                 <router-link class="page-navigator" to='/question'>Answer Quiz</router-link>
@@ -43,7 +45,7 @@
                             </li>
                         </ol>
                     </section>
-                    <section>
+                    <section class="take-ques">
                         <h3>Take one question from <router-link to="/question">Question list </router-link> and add in
                             yours own list</h3>
 
@@ -62,11 +64,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
     name: 'memberProfile',
     data() {
         return {
+            genreId: '',
             id: '',
             number: 1
         }
@@ -86,7 +89,8 @@ export default {
                 let mgs = 'Allowed once!'
                 await this.$store.dispatch('getMessages', mgs)
             }
-        }
+        },
+        ...mapActions(['deleteQuizz'])
     }
 }
 </script>
@@ -177,16 +181,43 @@ export default {
                 margin-bottom: 12px;
             }
 
+            .user-quiz {
+                h3{
+                    padding:20px 0px;
+                    text-decoration-line: underline;
+                }
+                article {
+                    display: flex;
+                    padding: 8px;
+
+                    p {
+                        text-transform: capitalize;
+                        font-weight: bold;
+                    }
+
+                    form {
+                        padding: 0px 12px;
+
+                        button {
+                            padding: 0px 4px;
+                            border-radius: 4px;
+                            font-size: .7rem;
+                        }
+                    }
+                }
+            }
+
             .ques-bolck {
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: space-between;
+                align-items: center;
 
-                section {
-                    padding: 24px;
+                .user-ques {
 
-                    h3 {
-                        padding: 24px 0px;
-                    }
+                    h3{
+                    padding:20px 0px;
+                    text-decoration-line: underline;
+                }
 
                     ol {
                         width: fit-content;
@@ -213,6 +244,14 @@ export default {
                         background-color: #000;
                         color: #fff;
                         padding: 2px 8px;
+                        margin-top: 16px;
+                    }
+                }
+
+                .take-ques{
+                    width: 40%;
+
+                    form{
                         margin-top: 16px;
                     }
                 }

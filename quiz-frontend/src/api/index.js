@@ -52,6 +52,12 @@ export async function takeInOne(id) {
 }
 
 
+export async function delQuiz(id) {
+  return await axios.delete(`/quiz/${id}`)
+}
+
+
+
 
 
 

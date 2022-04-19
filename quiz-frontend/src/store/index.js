@@ -43,6 +43,10 @@ export default new Vuex.Store({
       }
     },
 
+    removeGenList(state) {
+      state.genresList = []
+    },
+
     saveNewGenre(state, payload) {
       state.genresList.push(payload)
     },
@@ -189,8 +193,16 @@ export default new Vuex.Store({
       }
     },
 
-
-
+    async deleteQuizz(context, id) {
+      try {
+        const response = await API.delQuiz(id)
+        context.commit('removeGenList')
+        context.commit('saveGenres',response.data.genres)
+          console.log(response.data.messsage)
+      } catch (error) {
+          context.commit('saveErrorMgs', error)
+      }
+  },
 
     getMessages(context,mgs) {
       context.commit('saveMessage',mgs)
@@ -204,7 +216,7 @@ export default new Vuex.Store({
       const userGenres = []
       const genres = state.genresList.filter(gen => gen.userId == state.user.id)
       genres.forEach(gen => {
-        userGenres.push(gen.genre)
+        userGenres.push(gen)
       })
       return userGenres
     }
