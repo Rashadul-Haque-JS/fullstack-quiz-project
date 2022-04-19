@@ -56,4 +56,17 @@ const getFromUsers = async (req, res, next) => {
     }
 }
 
-module.exports = { createQuestion, allQuestions, getFromUsers }
+const question = async(req, res, next) => {
+
+    try {
+        const id = req.params.id
+        await Questions.destroy({ where: { id } })
+        const questionList = await Questions.findAll()
+        res.json({questions:questionList,message: 'Question deleted' })
+
+    } catch (error) {
+        res.status(501).json(error)
+    }
+}
+
+module.exports = { createQuestion, allQuestions, getFromUsers, question }
