@@ -13,7 +13,6 @@ export default new Vuex.Store({
     genres: {},
     questionsList:[],
     questions:{},
-    myQuesList:[],
     message: "",
     errorMessage: '',
   },
@@ -47,6 +46,10 @@ export default new Vuex.Store({
       state.genresList = []
     },
 
+    removeQuesList(state){
+      state.questionsList = []
+    },
+
     saveNewGenre(state, payload) {
       state.genresList.push(payload)
     },
@@ -62,12 +65,12 @@ export default new Vuex.Store({
       }
     },
 
-    saveUserQues(state, payload) {
-      state.myQuesList = payload
-    },
+    // saveUserQues(state, payload) {
+    //   state.myQuesList = payload
+    // },
 
     addToUserQues(state, question) {
-      state.myQuesList.push(question)
+      state.questionsList.push(question)
     },
 
     saveMessage(state, mgs){
@@ -202,6 +205,17 @@ export default new Vuex.Store({
       } catch (error) {
           context.commit('saveErrorMgs', error)
       }
+    },
+    
+    async deleteQues(context, id) {
+      try {
+        const response = await API.delQuestion(id)
+        context.commit('removeQuesList')
+        context.commit('saveQuestions', response.data.questions)
+          context.commit('saveMessage', response.data.message)
+      } catch (error) {
+          context.commit('saveErrorMgs', error)
+      }
   },
 
     getMessages(context,mgs) {
@@ -219,6 +233,15 @@ export default new Vuex.Store({
         userGenres.push(gen)
       })
       return userGenres
+    },
+
+    myQuesList(state) {
+      const userQuestions = []
+      const ques = state. questionsList.filter(que => que.userId == state.user.id)
+      ques.forEach(q => {
+        userQuestions.push(q)
+      })
+      return userQuestions
     }
   },
 

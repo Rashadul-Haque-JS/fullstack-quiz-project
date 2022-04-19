@@ -27,7 +27,7 @@
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
                     <article v-for="(gen, idx) in userGenres" :key="idx">
-                        <p>{{ gen.id }}.{{ gen.genre }}</p>
+                        <p>{{ idx+1 }}.{{ gen.genre }}</p>
                         <form @submit.prevent="deleteQuizz(gen.id)">
                             <button> delete </button>
                         </form>
@@ -39,11 +39,13 @@
                 <div class="ques-bolck">
                     <section class="user-ques">
                         <h3>Questions Of Genres</h3>
-                        <ol>
-                            <li v-for="(question, idx) in myQuesList" :key="idx">
-                                {{ question.question }} <span>answer ⇒{{ question.answer }}</span>
-                            </li>
-                        </ol>
+                        <article v-for="(question, idx) in myQuesList" :key="idx">
+                        <p>{{ idx+1 }}.{{ question.question }}<span>answer ⇒{{ question.answer }}</span></p>
+                        <form @submit.prevent="deleteQues(question.id)">
+                            <button> delete </button>
+                        </form>
+
+                    </article>
                     </section>
                     <section class="take-ques">
                         <h3>Take one question from <router-link to="/question">Question list </router-link> and add in
@@ -76,7 +78,7 @@ export default {
     },
     computed: {
         ...mapState(['user', 'myQuesList', 'token']),
-        ...mapGetters(['userGenres'])
+        ...mapGetters(['userGenres','myQuesList'])
     },
 
     methods: {
@@ -90,7 +92,7 @@ export default {
                 await this.$store.dispatch('getMessages', mgs)
             }
         },
-        ...mapActions(['deleteQuizz'])
+        ...mapActions(['deleteQuizz', 'deleteQues'])
     }
 }
 </script>
@@ -181,7 +183,7 @@ export default {
                 margin-bottom: 12px;
             }
 
-            .user-quiz {
+            .user-quiz, .ques-bolck {
                 h3{
                     padding:20px 0px;
                     text-decoration-line: underline;
@@ -212,44 +214,10 @@ export default {
                 justify-content: space-between;
                 align-items: center;
 
-                .user-ques {
-
-                    h3{
-                    padding:20px 0px;
-                    text-decoration-line: underline;
-                }
-
-                    ol {
-                        width: fit-content;
-                        display: block;
-
-                        li {
-                            span {
-                                font-weight: bold;
-                                padding: 0px 12px;
-                            }
-                        }
-                    }
-
-                    a {
-                        width: fit-content;
-                        color: #FB0204;
-                        padding: 0px 8px;
-                        margin-bottom: 24px;
-
-                    }
-
-                    button {
-                        width: fit-content;
-                        background-color: #000;
-                        color: #fff;
-                        padding: 2px 8px;
-                        margin-top: 16px;
-                    }
-                }
-
                 .take-ques{
-                    width: 40%;
+                    width: 30%;
+                    border-left: 2px dotted #FB0204;
+                    padding-left: 16px;
 
                     form{
                         margin-top: 16px;

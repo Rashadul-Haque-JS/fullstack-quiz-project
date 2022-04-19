@@ -56,6 +56,10 @@ export async function delQuiz(id) {
   return await axios.delete(`/quiz/${id}`)
 }
 
+export async function delQuestion(id) {
+  return await axios.delete(`/question/${id}`)
+}
+
 
 
 
