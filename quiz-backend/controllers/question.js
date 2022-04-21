@@ -21,9 +21,10 @@ const createQuestion = async (req, res, next) => {
 
         const userId = user.id
         console.log('diamond '+ userId)
-        const myQues = await Questions.findAll({where:{userId}})
+        const myQues = await Questions.findAll({ where: { userId } })
+        const newQuesList = await Questions.findAll()
 
-        res.status(200).json(myQues)
+        res.status(200).json({ myQues, newQuesList })
 
         next()
     } catch (error) {
@@ -44,13 +45,14 @@ const allQuestions = async (req, res, next) => {
 
 
 const getFromUsers = async (req, res, next) => {
-    
+
     try {
     const id = req.params.id
     console.log('ID '+ id)
-    const question = await Questions.findOne({where:{id}})
-    res.json({question })
-        
+        const question = await Questions.findOne({ where: { id } })
+
+    res.json({question,questionList })
+
     } catch (error) {
         res.status(501).json(error)
     }

@@ -27,9 +27,7 @@ module.exports = database => {
 
       image: {
         type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: true
-
+        allowNull: true
       }
 
     },

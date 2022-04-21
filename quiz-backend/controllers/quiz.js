@@ -2,20 +2,25 @@ const { Quizzes, Users} = require('../models/index')
 
 const createQuiz = async (req, res, next) => {
     try {
-        const { genre, image, email } = req.body
-    
+        const { genre,email } = req.body
+        const { originalname } = req.file
+
+
+        // console.log(req.body)
+        // console.log(req.file)
+
     const user = await Users.findOne({ where: { email } })
     const genExistList = await Quizzes.findAll({ where: { genre }, raw: true })
     const genExistBool = genExistList.some(ob => ob.user_email == email)
 
- 
+
         if (!genExistBool) {
            const newGenre = await Quizzes.create({
                 genre,
                 user_name: user.name,
                 user_email: user.email,
                 user_role: user.role,
-                image,
+                image:originalname,
                 userId: user.id
             })
 
@@ -26,7 +31,8 @@ const createQuiz = async (req, res, next) => {
             next()
         }
     } catch (error) {
-        res.status(501).json({ error:'something wrong!' })
+        res.status(501).json({ error: 'something wrong!' })
+        console.log(error)
         next()
     }
 }
@@ -54,8 +60,21 @@ const quiz = async(req, res, next) => {
     }
 }
 
+const updateQuiz = async(req, res, next) => {
+    try {
+        const { id, newGenre } = req.body
+        console.log(req.body);
+        await Quizzes.update({genre:newGenre},{ where: { id } })
+        const genres = await Quizzes.findAll()
+        res.json({genres:genres, message: 'Quiz updated' })
+        next()
+    } catch (error) {
+        res.status(501).json(error)
+    }
+}
 
 
 
 
-module.exports = { createQuiz, getAllGenres, quiz }
+
+module.exports = { createQuiz, getAllGenres, quiz, updateQuiz }

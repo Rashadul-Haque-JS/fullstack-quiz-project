@@ -4,9 +4,10 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "animal",
+        "image": "animal.png",
         "userId": "1"
     },
+
 
     {    
         "id":"2",
@@ -14,7 +15,7 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "history",
+        "image": "history.png",
         "userId": "1"
     },
     {   
@@ -23,7 +24,7 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "sports",
+        "image": "sports.png",
         "userId": "1"
     },
     {   
@@ -32,7 +33,7 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "tech",
+        "image": "tech.png",
         "userId": "1"
     },
     {    "id":"5",
@@ -40,7 +41,7 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "country",
+        "image": "country.png",
         "userId": "1"
     },
     {   
@@ -49,7 +50,7 @@
         "user_name": "Foo Bar",
         "user_email": "foo.bar@example.com",
         "user_role": "admin",
-        "image": "movie",
+        "image": "movie.png",
         "userId": "1"
     }
 ]
