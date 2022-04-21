@@ -11,19 +11,19 @@ export default new Vuex.Store({
     user: {},
     genresList: [],
     genres: {},
-    questionsList:[],
-    questions:{},
+    questionsList: [],
+    questions: {},
     message: "",
     errorMessage: '',
   },
-  
+
   mutations: {
-    getToken(state,payload) {
+    getToken(state, payload) {
       state.token = payload
     },
 
     saveUser(state, payload) {
-      state.user= {...payload}
+      state.user = { ...payload }
     },
 
     logout(state) {
@@ -46,7 +46,7 @@ export default new Vuex.Store({
       state.genresList = []
     },
 
-    removeQuesList(state){
+    removeQuesList(state) {
       state.questionsList = []
     },
 
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       }
     },
 
-    // saveUserQues(state, payload) {
+    // remove(state, payload) {
     //   state.myQuesList = payload
     // },
 
@@ -73,11 +73,11 @@ export default new Vuex.Store({
       state.questionsList.push(question)
     },
 
-    saveMessage(state, mgs){
+    saveMessage(state, mgs) {
       state.message = mgs
     },
 
-    saveErrorMgs(state, mgs){
+    saveErrorMgs(state, mgs) {
       state.errorMessage = mgs
     },
 
@@ -96,7 +96,7 @@ export default new Vuex.Store({
         context.commit('getToken', response.data.token)
         context.commit('saveUser', response.data.user)
         context.commit('delMessages')
-      
+
       } catch (error) {
         context.commit('saveErrorMgs', error.response.data.error)
       }
@@ -113,7 +113,7 @@ export default new Vuex.Store({
         context.commit('saveErrorMgs', error)
         console.log('ERROR_IS ' + error)
       }
-      
+
     },
 
     logout(context) {
@@ -121,9 +121,9 @@ export default new Vuex.Store({
       context.commit('delMessages')
     },
 
-    async makeQuiz(context, { genre, image, email }) {
+    async makeQuiz(context, formData) {
       try {
-        const response = await API.createQuiz(genre, image, email)
+        const response = await API.createQuiz(formData)
         context.commit('saveNewGenre', response.data.newGenre)
         context.commit('saveMessage', response.data.message)
       } catch (error) {
@@ -150,7 +150,6 @@ export default new Vuex.Store({
         if (this.state.questionsList.length < 1) {
           const response = await API.getAllQuestions()
           context.commit('saveQuestions', response.data)
-          console.log(response.data)
         }
       } catch (error) {
         context.commit('saveErrorMgs', error)
@@ -158,21 +157,24 @@ export default new Vuex.Store({
 
     },
 
-    async createQues(context, {email, genre, question, answer}){
+    async createQues(context, { email, genre, question, answer }) {
       try {
         const response = await API.addQuestion(email, genre, question, answer)
-        context.commit('saveUserQues',response.data)
+        context.commit('saveUserQues', response.data.myQues)
+        context.commit('removeQuesList')
+        context.commit('saveQuestions', response.data.newQuesList)
+
         console.log(response)
-       } catch (error) {
+      } catch (error) {
         context.commit('saveErrorMgs', error)
       }
     },
 
     async answerQuiz(context, { id, email, ans }) {
-      try { 
+      try {
         const response = await API.answerQuestions(id, email, ans)
         context.commit('saveUser', response.data.user)
-       context.commit('saveMessage', response.data.message)
+        context.commit('saveMessage', response.data.message)
       }
       catch (error) {
         context.commit('saveErrorMgs', error)
@@ -181,15 +183,15 @@ export default new Vuex.Store({
 
 
     async fetchOneQues(context, id) {
-      try { 
+      try {
         const response = await API.takeInOne(id)
         if (response.data.question) {
           context.commit('addToUserQues', response.data.question)
         } else {
           context.commit('saveMessage', response.data.message)
         }
-      
-       console.log(response)
+
+        console.log(response)
       }
       catch (error) {
         context.commit('saveErrorMgs', error)
@@ -200,29 +202,42 @@ export default new Vuex.Store({
       try {
         const response = await API.delQuiz(id)
         context.commit('removeGenList')
+        context.commit('saveGenres', response.data.genres)
+        console.log(response.data.messsage)
+      } catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+    },
+
+    async deleteQues(context, id) {
+      try {
+        const response = await API.delQuestion(id)
+        context.commit('removeQuesList')
+        context.commit('saveQuestions', response.data.questions)
+        context.commit('saveMessage', response.data.message)
+      } catch (error) {
+        context.commit('saveErrorMgs', error)
+      }
+    },
+
+
+    async updateQuizz(context, { id, newGenre}) {
+      try {
+        const response = await API.updateQuizz(id,newGenre)
+        context.commit('removeGenList')
         context.commit('saveGenres',response.data.genres)
           console.log(response.data.messsage)
       } catch (error) {
           context.commit('saveErrorMgs', error)
       }
     },
-    
-    async deleteQues(context, id) {
-      try {
-        const response = await API.delQuestion(id)
-        context.commit('removeQuesList')
-        context.commit('saveQuestions', response.data.questions)
-          context.commit('saveMessage', response.data.message)
-      } catch (error) {
-          context.commit('saveErrorMgs', error)
-      }
-  },
+
 
     getMessages(context,mgs) {
       context.commit('saveMessage',mgs)
     }
 
-  
+
   },
 
   getters: {

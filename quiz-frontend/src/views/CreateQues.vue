@@ -6,10 +6,10 @@
                     <h1>Create your Quiz</h1>
                     <p>*The same genre? - Nope!</p>
                     <hr>
-                    <form @submit.prevent="createQuiz">
-                        <input type="text" name="genre" placeholder="Genre" @change="inputStageOnChange"
-                            v-model="quiz.genre">
-                        <input type="file" name="image">
+                    <form @submit.prevent="createQuiz" enctype="multipart/form-data">
+                        <input type="text" name="genre" placeholder="Genre" @change="inputStageOnChange" v-model="genre"
+                            required>
+                        <input type="file" ref="fileField" required>
                         <button>Create Quiz</button>
                     </form>
                 </div>
@@ -25,8 +25,9 @@
                                 {{ gen.genre }}
                             </option>
                         </select>
-                        <input type="text" name="question" placeholder="your question" v-model="ques.question">
-                        <input type="text" name="answer" placeholder="correct answer of question" v-model="ques.answer">
+                        <input type="text" name="question" placeholder="your question" v-model="ques.question" required>
+                        <input type="text" name="answer" placeholder="correct answer of question" v-model="ques.answer"
+                            required>
                         <button>Create Question</button>
                     </form>
                 </div>
@@ -38,45 +39,65 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 export default {
 
     data() {
         return {
-            quiz: {
-                genre: '',
-                image: ''
-            },
+
+            genre: '',
+
             ques: {
                 genre: '',
                 question: '',
                 answer: ''
             },
+
             blankMgs: ''
+
         };
     },
 
     computed: {
-        ...mapState(['user', 'okMgs', 'errorMgs']),
+        ...mapState(['user']),
         ...mapGetters(['userGenres']),
-
-
     },
 
     methods: {
 
         async createQuiz() {
-            let imgs = 'comming';
-            await this.$store.dispatch('makeQuiz', { genre: this.quiz.genre, image: imgs, email: this.user.email })
+            try {
+                const formData = new FormData()
+                formData.append('image', this.$refs.fileField.files[0])
+                formData.append('genre', this.genre)
+                formData.append('email', this.user.email)
+
+                await this.$store.dispatch('makeQuiz', formData)
+
+                console.log(formData.get('image'))
+                console.log(formData.get('genre'))
+                console.log(formData.get('email'))
+
+            } catch (err) {
+                console.log(err);
+            }
+
+
         },
 
         async createQuestion() {
+
             await this.$store.dispatch('createQues', { email: this.user.email, genre: this.ques.genre, question: this.ques.question, answer: this.ques.answer })
         },
 
         inputStageOnChange() {
-            this.quiz.genre = this.quiz.genre.toLowerCase()
+            this.genre = this.genre.toLowerCase()
         },
+
+        ...mapActions(['getMessages'])
+
+
+
     },
 }
 </script>

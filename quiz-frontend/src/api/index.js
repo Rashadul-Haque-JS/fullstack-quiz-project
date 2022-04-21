@@ -20,10 +20,8 @@ export async function registerUser(newUser) {
  return await axios.post('/register', newUser)
 }
 
-export async function createQuiz(genre, image, email) {
-  return await  axios.post('/createQuiz', {
-        genre, image, email 
-    })
+export async function createQuiz(formData) {
+  return await  axios.post('/createQuiz', formData)
 }
 
 export async function addQuestion(email,genre, question, answer) {
@@ -58,6 +56,10 @@ export async function delQuiz(id) {
 
 export async function delQuestion(id) {
   return await axios.delete(`/question/${id}`)
+}
+
+export async function updateQuizz(id, newGenre) {
+  return await axios.patch('/updateQuiz', { id , newGenre})
 }
 
 

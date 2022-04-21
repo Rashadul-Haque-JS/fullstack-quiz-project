@@ -2,7 +2,7 @@
     <article>
          <img
         class="genre-image"
-        :src="require(`@/assets/${genre.image}.png`)"
+        :src="require(`@/assets/${genre.image}`)"
         alt="genres image"
       />
       <section>

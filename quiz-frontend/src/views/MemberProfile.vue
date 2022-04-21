@@ -27,12 +27,37 @@
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
                     <article v-for="(gen, idx) in userGenres" :key="idx">
-                        <p>{{ idx+1 }}.{{ gen.genre }}</p>
+                        <p>{{ idx + 1 }}.{{ gen.genre }}</p>
                         <form @submit.prevent="deleteQuizz(gen.id)">
                             <button> delete </button>
                         </form>
-
+                        <button @click="updateIt(gen.id)">update</button>
                     </article>
+                    <!-- <table v-for="(gen, idx) in userGenres" :key="idx">
+                        <tr>
+                            <th>{{ idx + 1 }}.{{ gen.genre }}</th>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <form @submit.prevent="deleteQuizz(gen.id)">
+                                    <button> delete </button>
+                                </form>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <button @click="updateIt(gen.id)">update</button>
+                            </td>
+
+                        </tr>
+                    </table> -->
+                    <form @submit.prevent="quizUpdate" v-if="isUpdate">
+                        <input type="text" v-model="update.newGenre" placeholder="new name of genre" required>
+                        <button> update </button>
+                    </form>
+
                 </section>
                 <hr>
                 <router-link class="page-navigator" to='/question'>Answer Quiz</router-link>
@@ -40,12 +65,12 @@
                     <section class="user-ques">
                         <h3>Questions Of Genres</h3>
                         <article v-for="(question, idx) in myQuesList" :key="idx">
-                        <p>{{ idx+1 }}.{{ question.question }}<span>answer ⇒{{ question.answer }}</span></p>
-                        <form @submit.prevent="deleteQues(question.id)">
-                            <button> delete </button>
-                        </form>
+                            <p>{{ idx + 1 }}.{{ question.question }}<span>answer ⇒{{ question.answer }}</span></p>
+                            <form @submit.prevent="deleteQues(question.id)">
+                                <button> delete </button>
+                            </form>
 
-                    </article>
+                        </article>
                     </section>
                     <section class="take-ques">
                         <h3>Take one question from <router-link to="/question">Question list </router-link> and add in
@@ -73,12 +98,18 @@ export default {
         return {
             genreId: '',
             id: '',
-            number: 1
+            number: 1,
+            update: {
+                id: '',
+                newGenre: ''
+            },
+            isUpdate: false
+
         }
     },
     computed: {
         ...mapState(['user', 'myQuesList', 'token']),
-        ...mapGetters(['userGenres','myQuesList'])
+        ...mapGetters(['userGenres', 'myQuesList'])
     },
 
     methods: {
@@ -92,7 +123,17 @@ export default {
                 await this.$store.dispatch('getMessages', mgs)
             }
         },
-        ...mapActions(['deleteQuizz', 'deleteQues'])
+        ...mapActions(['deleteQuizz', 'deleteQues']),
+
+        async quizUpdate() {
+            await this.$store.dispatch('updateQuizz', { id: this.update.id, newGenre: this.update.newGenre })
+            this.isUpdate = false
+        },
+
+        updateIt(number) {
+            this.update.id = number
+            this.isUpdate = true
+        }
     }
 }
 </script>
@@ -183,11 +224,13 @@ export default {
                 margin-bottom: 12px;
             }
 
-            .user-quiz, .ques-bolck {
-                h3{
-                    padding:20px 0px;
+            .user-quiz,
+            .ques-bolck {
+                h3 {
+                    padding: 20px 0px;
                     text-decoration-line: underline;
                 }
+
                 article {
                     display: flex;
                     padding: 8px;
@@ -199,12 +242,12 @@ export default {
 
                     form {
                         padding: 0px 12px;
+                    }
 
-                        button {
-                            padding: 0px 4px;
-                            border-radius: 4px;
-                            font-size: .7rem;
-                        }
+                    button {
+                        padding: 0px 4px;
+                        border-radius: 4px;
+                        font-size: .7rem;
                     }
                 }
             }
@@ -214,12 +257,12 @@ export default {
                 justify-content: space-between;
                 align-items: center;
 
-                .take-ques{
+                .take-ques {
                     width: 30%;
                     border-left: 2px dotted #FB0204;
                     padding-left: 16px;
 
-                    form{
+                    form {
                         margin-top: 16px;
                     }
                 }
