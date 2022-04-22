@@ -6,6 +6,7 @@ const { createQuiz, getAllGenres, quiz,updateQuiz } = require('../controllers/qu
 const { createQuestion, allQuestions,getFromUsers,question } = require('../controllers/question')
 const { answer } = require('../controllers/answer')
 const {uploadImage} = require('../controllers/image')
+const {staticData} = require('../controllers/static')
 
 
 // Post
@@ -23,6 +24,7 @@ router.post('/answer', answer)
 router.get('/allQuizGenres', getAllGenres)
 router.get('/allQuestions',allQuestions )
 router.get('/getFromUsers/:id', getFromUsers)
+router.get('/staticData', staticData)
 
 
 // Delete
