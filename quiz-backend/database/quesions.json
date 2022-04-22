@@ -18,7 +18,7 @@
         "userId": "1"
     },
     {
-        "question": "What's name of IBM's first computer?",
+        "question": "What's the name of IBM's first computer?",
         "answer": "701",
         "quizId": "4",
         "userId": "1"
@@ -35,5 +35,5 @@
         "quizId": "6",
         "userId": "1"
     }
-    
+
 ]

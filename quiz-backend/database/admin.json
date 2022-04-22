@@ -1,0 +1,7 @@
+
+    {
+        "name": "Foo Bar",
+        "email": "foo.bar@example.com",
+        "password_hash": "p_hash",
+        "role": "admin"
+    }

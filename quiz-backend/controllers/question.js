@@ -21,10 +21,9 @@ const createQuestion = async (req, res, next) => {
 
         const userId = user.id
         console.log('diamond '+ userId)
-        const myQues = await Questions.findAll({ where: { userId } })
         const newQuesList = await Questions.findAll()
 
-        res.status(200).json({ myQues, newQuesList })
+        res.status(200).json({ newQuesList })
 
         next()
     } catch (error) {
@@ -51,7 +50,7 @@ const getFromUsers = async (req, res, next) => {
     console.log('ID '+ id)
         const question = await Questions.findOne({ where: { id } })
 
-    res.json({question,questionList })
+    res.json({question})
 
     } catch (error) {
         res.status(501).json(error)
