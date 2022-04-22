@@ -23,7 +23,7 @@
 
             <h2>YOUR CREATIONS ↴</h2>
             <div class="user-creations">
-                <router-link class="page-navigator" to='/create'>Create More</router-link>
+                <router-link class="page-navigator" @click.native="getMessages(blankMgs)" to='/create'>Create More</router-link >
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
                     <article v-for="(gen, idx) in userGenres" :key="idx">
@@ -85,7 +85,8 @@ export default {
                 newGenre: ''
             },
             isUpdate: false,
-            avatar: ''
+            avatar: '',
+            blankMgs:''
 
         }
     },
@@ -106,7 +107,7 @@ export default {
                 await this.$store.dispatch('getMessages', mgs)
             }
         },
-        ...mapActions(['deleteQuizz', 'deleteQues']),
+        ...mapActions(['deleteQuizz', 'deleteQues','getMessages']),
 
         async quizUpdate() {
             await this.$store.dispatch('updateQuizz', { id: this.update.id, newGenre: this.update.newGenre })

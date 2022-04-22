@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <router-link to="/">Home</router-link>
+      <router-link @click.native="getMessages(blankMgs)" to="/">Home</router-link>
       <div v-if="!token">
         <router-link to="/login">login</router-link>
         <router-link to="/register">Register</router-link>

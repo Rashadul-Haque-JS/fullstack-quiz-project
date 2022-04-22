@@ -226,7 +226,7 @@ export default new Vuex.Store({
         const response = await API.updateQuizz(id,newGenre)
         context.commit('removeGenList')
         context.commit('saveGenres',response.data.genres)
-          console.log(response.data.messsage)
+        context.commit('saveMessage', response.data.message)
       } catch (error) {
           context.commit('saveErrorMgs', error)
       }
