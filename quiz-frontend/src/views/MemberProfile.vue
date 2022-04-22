@@ -5,8 +5,8 @@
             <div class="user-info">
                 <figure>
                     <img src="../assets/avatar.png" alt="profile image">
-                    <form @submit.prevent="">
-                        <input type="file" name="photograpgh" accept="image/png">
+                    <form @submit.prevent="uploadAvatar">
+                        <input type="file" ref="file">
                         <button>upload your photo</button>
                     </form>
                 </figure>
@@ -27,35 +27,16 @@
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
                     <article v-for="(gen, idx) in userGenres" :key="idx">
-                        <p>{{ idx + 1 }}.{{ gen.genre }}</p>
+                        <p>{{ idx + 1 }}.&nbsp;{{ gen.genre }}</p>
                         <form @submit.prevent="deleteQuizz(gen.id)">
                             <button> delete </button>
                         </form>
                         <button @click="updateIt(gen.id)">update</button>
                     </article>
-                    <!-- <table v-for="(gen, idx) in userGenres" :key="idx">
-                        <tr>
-                            <th>{{ idx + 1 }}.{{ gen.genre }}</th>
 
-                        </tr>
-                        <tr>
-                            <td>
-                                <form @submit.prevent="deleteQuizz(gen.id)">
-                                    <button> delete </button>
-                                </form>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>
-                                <button @click="updateIt(gen.id)">update</button>
-                            </td>
-
-                        </tr>
-                    </table> -->
-                    <form @submit.prevent="quizUpdate" v-if="isUpdate">
+                    <form class="update-quiz" @submit.prevent="quizUpdate" v-if="isUpdate">
                         <input type="text" v-model="update.newGenre" placeholder="new name of genre" required>
-                        <button> update </button>
+                        <button>Ok</button>
                     </form>
 
                 </section>
@@ -65,7 +46,7 @@
                     <section class="user-ques">
                         <h3>Questions Of Genres</h3>
                         <article v-for="(question, idx) in myQuesList" :key="idx">
-                            <p>{{ idx + 1 }}.{{ question.question }}<span>answer ⇒{{ question.answer }}</span></p>
+                            <p>{{ idx + 1 }}.&nbsp;{{ question.question }}<span>answer ⇒{{ question.answer }}</span></p>
                             <form @submit.prevent="deleteQues(question.id)">
                                 <button> delete </button>
                             </form>
@@ -103,7 +84,8 @@ export default {
                 id: '',
                 newGenre: ''
             },
-            isUpdate: false
+            isUpdate: false,
+            avatar: ''
 
         }
     },
@@ -118,6 +100,7 @@ export default {
                 await this.$store.dispatch('fetchOneQues', this.id)
                 this.number = this.number + 1
                 console.log(this.number)
+
             } else {
                 let mgs = 'Allowed once!'
                 await this.$store.dispatch('getMessages', mgs)
@@ -133,6 +116,14 @@ export default {
         updateIt(number) {
             this.update.id = number
             this.isUpdate = true
+        },
+
+        // Partial done...
+        uploadAvatar() {
+            const formData = new FormData()
+            formData.append('image', this.$refs.file.files[0])
+            this.avatar = formData.get('image').name
+            console.log(this.avatar)
         }
     }
 }
@@ -248,6 +239,24 @@ export default {
                         padding: 0px 4px;
                         border-radius: 4px;
                         font-size: .7rem;
+                    }
+                }
+
+                .update-quiz {
+                    margin-top: 24px;
+
+                    input {
+                        width: 200px;
+                        border-radius: 5px;
+                    }
+
+                    button {
+                        width: fit-content;
+                        background-color: #000;
+                        color: #fff;
+                        padding: 0px 4px;
+                        margin: 16px;
+                        border-radius: 5px
                     }
                 }
             }

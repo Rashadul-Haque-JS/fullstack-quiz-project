@@ -8,9 +8,12 @@
                     <input type="text" name="answer" v-model="answer">
                     <button>Submit Answer</button>
                 </form>
+
                 <div class="btn">
                     <button :disabled="prevDisable" @click="prevQues">Previous Question</button>
+                    <p>{{count+1}}&nbsp;/&nbsp;{{questionsList.length}}</p>
                     <button :disabled="nextDisable" @click="nextQues">Next Question</button>
+
                 </div>
                 <router-link to='/create' @click.native="getMessages(blankMgs)">Create more...</router-link>
             </article>
@@ -65,6 +68,8 @@ export default {
     },
 
 
+
+
 }
 </script>
 
@@ -112,13 +117,18 @@ button {
 
         .btn {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             margin-top: 32px;
 
             button {
                 background-color: #FB0204;
-                padding: 3px;
+                padding: 2px;
+                margin-right: 0px;
+            }
+
+            p{
+                padding:0px 12px;
             }
         }
 

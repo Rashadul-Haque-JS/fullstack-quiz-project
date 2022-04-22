@@ -8,13 +8,13 @@
       </header>
       <main>
       <div class="headings">
-      <h1>CREATE YOUR OWN QUIZ BASE</h1>   
+      <h1>CREATE YOUR OWN QUIZ BASE</h1>
       <h1>🤔</h1>
       <h1>ANSWER FOR OTHER'S QUESTIONS</h1>
       </div>
       <section class="sub-headings">
       <h2>Quizzes genres ↴</h2>
-      <p>(User can create quiz of more genres)</p>
+      <p>(User can create more genres)</p>
       </section>
       <div class="genre-image" v-if="!token">
       <router-link to='/login' v-for="(genre,index) in genres" :key="index">
@@ -44,13 +44,13 @@ export default {
   computed:{
     ...mapState(['genres', 'token'])
   }
- 
+
 }
 </script>
 <style lang="scss" scoped>
 .home{
   width:100%;
- 
+
   img{
     width:100%
   }

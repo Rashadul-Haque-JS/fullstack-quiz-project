@@ -55,6 +55,7 @@ export default {
 
             blankMgs: ''
 
+
         };
     },
 
@@ -94,7 +95,9 @@ export default {
             this.genre = this.genre.toLowerCase()
         },
 
-        ...mapActions(['getMessages'])
+        ...mapActions(['getMessages']),
+
+
 
 
 

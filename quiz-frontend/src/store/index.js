@@ -69,9 +69,9 @@ export default new Vuex.Store({
     //   state.myQuesList = payload
     // },
 
-    addToUserQues(state, question) {
-      state.questionsList.push(question)
-    },
+    // addToUserQues(state, question) {
+    //   state.questionsList.push(question)
+    // },
 
     saveMessage(state, mgs) {
       state.message = mgs
@@ -160,7 +160,6 @@ export default new Vuex.Store({
     async createQues(context, { email, genre, question, answer }) {
       try {
         const response = await API.addQuestion(email, genre, question, answer)
-        context.commit('saveUserQues', response.data.myQues)
         context.commit('removeQuesList')
         context.commit('saveQuestions', response.data.newQuesList)
 
@@ -185,13 +184,14 @@ export default new Vuex.Store({
     async fetchOneQues(context, id) {
       try {
         const response = await API.takeInOne(id)
-        if (response.data.question) {
-          context.commit('addToUserQues', response.data.question)
+        const data = response.data.question
+        if (data) {
+          context.getters.myQuesList.push(data)
         } else {
           context.commit('saveMessage', response.data.message)
         }
 
-        console.log(response)
+        console.log(response.data.question)
       }
       catch (error) {
         context.commit('saveErrorMgs', error)
