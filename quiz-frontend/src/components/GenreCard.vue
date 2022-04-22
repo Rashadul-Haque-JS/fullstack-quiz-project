@@ -1,8 +1,8 @@
 <template>
     <article>
-        <img class="genre-image" :src="require(`@/assets/${genre.image}`)" alt="genres image" />
+        <img class="genre-image" :src="require(`@/assets/${genre}.png`)" alt="genres image" />
         <section>
-            <h1>{{ genre.genre }}</h1>
+            <h1>{{ genre}}</h1>
             <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua."</p>
         </section>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    props: { genre: Object }
+    props: { genre:String }
 }
 </script>
 

@@ -16,14 +16,8 @@
       <h2>Quizzes genres ↴</h2>
       <p>(User can create more genres)</p>
       </section>
-      <div class="genre-image" v-if="!token">
-      <router-link to='/login' v-for="(genre,index) in genres" :key="index">
-        <Card :genre="genre"/>
-      </router-link>
-      </div>
-
-      <div class="genre-image" v-else>
-      <router-link to='/question' v-for="(genre,index) in genres" :key="index">
+      <div class="genre-image">
+      <router-link to='/login' v-for="(genre,index) in staticGenArr" :key="index">
         <Card :genre="genre"/>
       </router-link>
       </div>
@@ -42,7 +36,7 @@ export default {
   },
 
   computed:{
-    ...mapState(['genres', 'token'])
+    ...mapState(['genres', 'token', 'staticGenArr'])
   }
 
 }

@@ -25,6 +25,7 @@ export default {
   mounted() {
     this.$store.dispatch('fetchGenres')
     this.$store.dispatch('fetchQuestions')
+    this.$store.dispatch('fetchStatic')
   }
 
 }

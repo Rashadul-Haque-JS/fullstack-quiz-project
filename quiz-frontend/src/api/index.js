@@ -41,6 +41,10 @@ export async function getAllGenres() {
   return await axios.get('/allQuizGenres')
 }
 
+export async function getStatic() {
+  return await axios.get('/staticData')
+}
+
 export async function getAllQuestions() {
   return await axios.get('/allQuestions')
 }

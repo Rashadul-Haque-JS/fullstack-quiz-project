@@ -13,6 +13,7 @@ export default new Vuex.Store({
     genres: {},
     questionsList: [],
     questions: {},
+    staticGenArr:[],
     message: "",
     errorMessage: '',
   },
@@ -42,6 +43,10 @@ export default new Vuex.Store({
       }
     },
 
+    saveStatic(state,staticGen){
+      state.staticGenArr =staticGen
+    },
+
     removeGenList(state) {
       state.genresList = []
     },
@@ -64,14 +69,6 @@ export default new Vuex.Store({
         Vue.set(state.questions, question.id, question)
       }
     },
-
-    // remove(state, payload) {
-    //   state.myQuesList = payload
-    // },
-
-    // addToUserQues(state, question) {
-    //   state.questionsList.push(question)
-    // },
 
     saveMessage(state, mgs) {
       state.message = mgs
@@ -134,7 +131,7 @@ export default new Vuex.Store({
 
     async fetchGenres(context) {
       try {
-        if (this.state.genresList.length < 1) {
+        if (context.state.genresList.length < 1) {
           const response = await API.getAllGenres()
           context.commit('saveGenres', response.data)
           console.log(response.data)
@@ -145,9 +142,17 @@ export default new Vuex.Store({
 
     },
 
+    async fetchStatic(context) {
+      if (context.state.staticGenArr.length < 1) {
+        const response = await API.getStatic()
+        context.commit('saveStatic', response.data)
+     }
+
+    },
+
     async fetchQuestions(context) {
       try {
-        if (this.state.questionsList.length < 1) {
+        if (context.state.questionsList.length < 1) {
           const response = await API.getAllQuestions()
           context.commit('saveQuestions', response.data)
         }
