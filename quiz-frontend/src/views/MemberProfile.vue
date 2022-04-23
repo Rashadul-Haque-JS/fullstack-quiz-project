@@ -23,23 +23,17 @@
 
             <h2>YOUR CREATIONS ↴</h2>
             <div class="user-creations">
-                <router-link class="page-navigator" @click.native="getMessages(blankMgs)" to='/create'>Create More</router-link >
+                <router-link class="page-navigator" @click.native="removeMessages" to='/create'>Create More
+                </router-link>
                 <section class="user-quiz">
                     <h3>Genres Of Quiz</h3>
-                    <article v-for="(gen, idx) in userGenres" :key="idx">
-                        <p>{{ idx + 1 }}.&nbsp;{{ gen.genre }}</p>
-                        <form @submit.prevent="deleteQuizz(gen.id)">
-                            <button> delete </button>
-                        </form>
-                        <button @click="updateIt(gen.id)">update</button>
-                    </article>
-
-                    <form class="update-quiz" @submit.prevent="quizUpdate" v-if="isUpdate">
-                        <input type="text" v-model="update.newGenre" placeholder="new name of genre" required>
-                        <button>Ok</button>
-                    </form>
-
+                    <div class="quiz-card">
+                        <div class="card-loop" v-for="(genre, idx) in userGenres" :key="idx">
+                            <ProfileGenCard :genre="genre" :idx="idx" />
+                        </div>
+                    </div>
                 </section>
+
                 <hr>
                 <router-link class="page-navigator" to='/question'>Answer Quiz</router-link>
                 <div class="ques-bolck">
@@ -73,60 +67,46 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import ProfileGenCard from '../components/ProfileGenCard.vue'
 export default {
-    name: 'memberProfile',
+    name: "memberProfile",
+    components: { ProfileGenCard },
     data() {
         return {
-            genreId: '',
-            id: '',
+            genreId: "",
+            id: "",
             number: 1,
-            update: {
-                id: '',
-                newGenre: ''
-            },
-            isUpdate: false,
-            avatar: '',
-            blankMgs:''
-
-        }
+            avatar: "",
+            blankMgs: ""
+        };
     },
     computed: {
-        ...mapState(['user', 'myQuesList', 'token']),
-        ...mapGetters(['userGenres', 'myQuesList'])
+        ...mapState(["user", "myQuesList", "token"]),
+        ...mapGetters(["userGenres", "myQuesList"])
     },
-
     methods: {
         async getOneQues() {
             if (this.number < 2) {
-                await this.$store.dispatch('fetchOneQues', this.id)
-                this.number = this.number + 1
-                console.log(this.number)
-
-            } else {
-                let mgs = 'Allowed once!'
-                await this.$store.dispatch('getMessages', mgs)
+                await this.$store.dispatch("fetchOneQues", this.id);
+                this.number = this.number + 1;
+                console.log(this.number);
+            }
+            else {
+                let mgs = "Allowed once!";
+                await this.$store.dispatch("getMessages", mgs);
             }
         },
-        ...mapActions(['deleteQuizz', 'deleteQues','getMessages']),
-
-        async quizUpdate() {
-            await this.$store.dispatch('updateQuizz', { id: this.update.id, newGenre: this.update.newGenre })
-            this.isUpdate = false
-        },
-
-        updateIt(number) {
-            this.update.id = number
-            this.isUpdate = true
-        },
+        ...mapActions(["deleteQuizz", "deleteQues", "removeMessages"]),
 
         // Partial done...
         uploadAvatar() {
-            const formData = new FormData()
-            formData.append('image', this.$refs.file.files[0])
-            this.avatar = formData.get('image').name
-            console.log(this.avatar)
+            const formData = new FormData();
+            formData.append("image", this.$refs.file.files[0]);
+            this.avatar = formData.get("image").name;
+            console.log(this.avatar);
         }
-    }
+    },
+
 }
 </script>
 
@@ -216,7 +196,24 @@ export default {
                 margin-bottom: 12px;
             }
 
-            .user-quiz,
+            .user-quiz {
+                display: block;
+
+                .quiz-card {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    grid-column-gap: 72px;
+                    place-items: center;
+                    grid-row-gap: 72px;
+                    padding: 40px 0px 40px 32px;
+                }
+
+                h3 {
+                    text-decoration: underline;
+                }
+            }
+
+            // .user-quiz,
             .ques-bolck {
                 h3 {
                     padding: 20px 0px;

@@ -15,7 +15,7 @@
                     <button :disabled="nextDisable" @click="nextQues">Next Question</button>
 
                 </div>
-                <router-link to='/create' @click.native="getMessages(blankMgs)">Create more...</router-link>
+                <router-link to='/create' @click.native="removeMessages">Create more...</router-link>
             </article>
 
         </div>
@@ -64,7 +64,7 @@ export default {
             this.count > 0 ? this.count-- : ''
         },
 
-        ...mapActions(['getMessages'])
+        ...mapActions(['removeMessages'])
     },
 
 

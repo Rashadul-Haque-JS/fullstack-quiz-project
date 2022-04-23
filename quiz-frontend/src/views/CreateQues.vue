@@ -32,7 +32,7 @@
                     </form>
                 </div>
             </div>
-            <router-link to='/question' @click.native="getMessages(blankMgs)">Answer Quiz</router-link>
+            <router-link to='/question' @click.native="removeMessages">Answer Quiz</router-link>
         </div>
 
     </div>
@@ -95,7 +95,7 @@ export default {
             this.genre = this.genre.toLowerCase()
         },
 
-        ...mapActions(['getMessages']),
+        ...mapActions(['removeMessages']),
 
 
 

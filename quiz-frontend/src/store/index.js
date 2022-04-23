@@ -237,9 +237,12 @@ export default new Vuex.Store({
       }
     },
 
+    getMessages(context, mgs) {
+      context.commit('saveMessage', mgs)
+    },
 
-    getMessages(context,mgs) {
-      context.commit('saveMessage',mgs)
+    removeMessages(context) {
+      context.commit('delMessages')
     }
 
 
@@ -262,7 +265,10 @@ export default new Vuex.Store({
         userQuestions.push(q)
       })
       return userQuestions
-    }
+    },
+
+    userRole:(state)=> state.user.role
+
   },
 
   modules: {

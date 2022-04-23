@@ -1,13 +1,13 @@
 <template>
   <div>
     <nav>
-      <router-link @click.native="getMessages(blankMgs)" to="/">Home</router-link>
+      <router-link @click.native="removeMessages" to="/">Home</router-link>
       <div v-if="!token">
         <router-link to="/login">login</router-link>
         <router-link to="/register">Register</router-link>
       </div>
       <div v-else>
-        <router-link to="/profile" class="user-name" @click.native="getMessages(blankMgs)">Most welcome
+        <router-link to="/profile" class="user-name" @click.native="removeMessages">Most welcome
           <span>{{ user.name }} !</span></router-link>
         <button @click="logout">logout</button>
       </div>
@@ -22,7 +22,7 @@ export default {
   props: { token: String, user: Object },
   data() {
     return {
-      blankMgs: ''
+      // blankMgs: ''
     };
   },
 
@@ -33,7 +33,7 @@ export default {
       await this.$router.push('/login')
     },
 
-    ...mapActions(['getMessages'])
+    ...mapActions(['removeMessages'])
   }
 }
 </script>
