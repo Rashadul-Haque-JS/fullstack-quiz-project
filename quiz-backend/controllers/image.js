@@ -2,7 +2,7 @@ const multer = require('multer')
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/img')
+    cb(null, 'public/img')
   },
   filename: function (req, file, cb) {
     const mimeExtension = {
@@ -17,10 +17,12 @@ let storage = multer.diskStorage({
 const uploadImage = multer({
   storage: storage,
     fileFilter: (req, file, cb) => {
-      
+
     if (
       file.mimetype === 'image/png' ||
-      file.mimetype === 'image/svg') {
+      file.mimetype === 'image/svg' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jepg') {
       cb(null, true)
     } else {
       cb(null, false)

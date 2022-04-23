@@ -1,9 +1,9 @@
 const { Quizzes, Users} = require('../models/index')
-
+const fs = require('fs')
 const createQuiz = async (req, res, next) => {
     try {
         const { genre,email } = req.body
-        const { originalname } = req.file
+        const {  originalname } = req.file
 
 
         // console.log(req.body)
@@ -20,7 +20,7 @@ const createQuiz = async (req, res, next) => {
                 user_name: user.name,
                 user_email: user.email,
                 user_role: user.role,
-                image:originalname,
+                image: originalname,
                 userId: user.id
             })
 
