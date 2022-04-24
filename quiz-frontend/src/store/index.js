@@ -167,8 +167,6 @@ export default new Vuex.Store({
         const response = await API.addQuestion(email, genre, question, answer)
         context.commit('removeQuesList')
         context.commit('saveQuestions', response.data.newQuesList)
-
-        console.log(response)
       } catch (error) {
         context.commit('saveErrorMgs', error)
       }
