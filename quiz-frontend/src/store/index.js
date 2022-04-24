@@ -208,7 +208,6 @@ export default new Vuex.Store({
         const response = await API.delQuiz(id)
         context.commit('removeGenList')
         context.commit('saveGenres', response.data.genres)
-        console.log(response.data.messsage)
       } catch (error) {
         context.commit('saveErrorMgs', error)
       }
