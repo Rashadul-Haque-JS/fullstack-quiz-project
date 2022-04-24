@@ -125,6 +125,7 @@ export default {
             justify-content: space-between;
             align-items: center;
             padding: 32px 56px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
             figure {
                 display: flex;
@@ -189,7 +190,7 @@ export default {
             justify-content: space-around;
             align-items: flex-start;
             padding: 24px;
-            border: 1px solid #FB0204;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             margin-bottom: 100px;
 
             a {
