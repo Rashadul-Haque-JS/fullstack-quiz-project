@@ -1,5 +1,4 @@
 const { Quizzes, Users, Questions } = require('../models/index')
-const questions = require('../models/questions')
 
 const createQuestion = async (req, res, next) => {
     try {
